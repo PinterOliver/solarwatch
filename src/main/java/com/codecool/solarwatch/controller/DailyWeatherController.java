@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping ("/")
+@RequestMapping
 public class DailyWeatherController {
   DailyWeatherService dailyWeatherService;
   
@@ -21,7 +21,7 @@ public class DailyWeatherController {
     this.dailyWeatherService = dailyWeatherService;
   }
   
-  @GetMapping ("/")
+  @GetMapping ("/sun")
   public ResponseEntity<DailyWeatherDTO> getDailyWeather(@RequestParam String city,
           @RequestParam (required = false) LocalDate date) {
     return ResponseEntity.ok().body(dailyWeatherService.getDailyWeatherReport(city, date));
