@@ -4,8 +4,8 @@ import com.codecool.solarwatch.exception.BadAPIRequestException;
 import com.codecool.solarwatch.externalApi.GeocodingAPI;
 import com.codecool.solarwatch.externalApi.SunTimeAPI;
 import com.codecool.solarwatch.model.auxiliary.Coordinates;
+import com.codecool.solarwatch.model.weather.DailySunTimeDetail;
 import com.codecool.solarwatch.model.weather.DailyWeatherDTO;
-import com.codecool.solarwatch.model.weather.SunTimeDetail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +35,14 @@ public class DailyWeatherService {
     if (coordinates.isEmpty()) {
       throw new BadAPIRequestException();
     }
-    Optional<SunTimeDetail> sunTimeDetail = sunTimeAPI.getSunTime(coordinates.get(), date);
+    Optional<DailySunTimeDetail> sunTimeDetail = sunTimeAPI.getSunTime(coordinates.get(), date);
     if (sunTimeDetail.isEmpty()) {
       throw new BadAPIRequestException();
     }
     return getDailyWeatherDTO(city, date, sunTimeDetail.get());
   }
   
-  private DailyWeatherDTO getDailyWeatherDTO(String city, LocalDate date, SunTimeDetail sunTimeDetail) {
+  private DailyWeatherDTO getDailyWeatherDTO(String city, LocalDate date, DailySunTimeDetail sunTimeDetail) {
     return new DailyWeatherDTO(city, date, sunTimeDetail.sunrise(), sunTimeDetail.sunset());
   }
 }

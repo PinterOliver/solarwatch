@@ -1,7 +1,7 @@
 package com.codecool.solarwatch.externalApi;
 
 import com.codecool.solarwatch.model.auxiliary.Coordinates;
-import com.codecool.solarwatch.model.geocoding.Cities;
+import com.codecool.solarwatch.model.geocoding.City;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +31,7 @@ public class OpenWeatherMapAPI implements GeocodingAPI {
   public Optional<Coordinates> getCoordinates(String city) {
     try {
       String url = generateURL(city);
-      Cities cities = getOpenWeatherCity(url);
+      City[] cities = getOpenWeatherCity(url);
       return Optional.of(getCoordinates(cities));
     } catch (Exception e) {
       logger.info(e.getMessage());
@@ -39,12 +39,12 @@ public class OpenWeatherMapAPI implements GeocodingAPI {
     }
   }
   
-  private Coordinates getCoordinates(Cities cities) {
-    return new Coordinates(cities.cities().get(0).lat(), cities.cities().get(0).lon());
+  private Coordinates getCoordinates(City[] cities) {
+    return new Coordinates(cities[0].lat(), cities[0].lon());
   }
   
-  private Cities getOpenWeatherCity(String url) {
-    return restTemplate.getForObject(url, Cities.class);
+  private City[] getOpenWeatherCity(String url) {
+    return restTemplate.getForObject(url, City[].class);
   }
   
   private String generateURL(String city) {
