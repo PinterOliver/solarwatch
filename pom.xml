@@ -100,8 +100,7 @@
                 </executions>
                 <configuration>
                     <username>pinteroliverpeter</username>
-                    <!--suppress UnresolvedMavenProperty -->
-                    <password>${env.DOCKER_HUB_TOKEN}</password>
+                    <password>env.DOCKER_HUB_TOKEN</password>
                     <repository>registry.hub.docker.com/pinteroliverpeter/solarwatch-api</repository>
                     <tag>${project.version}</tag>
                 </configuration>
