@@ -30,4 +30,5 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-           mvn test
+    - name: Test with Maven
+      run: mvn test
